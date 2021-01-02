@@ -1,7 +1,6 @@
 from flask import Flask
+from flask import render_template
 from flask import request
-from string import Template
-from nic_parser.parser import Parser
 
 app = Flask(__name__)
 
@@ -22,17 +21,27 @@ app = Flask(__name__)
 #
 #     return f"Dob : {dob} , Gender : {gender.name}"
 
+# @app.route("/test")
+# def index():
+#     return render_template("index.html", name="AAA")
+#
 
-@app.route("/file")
-def hello_world():
-    index_file = open("template/index.html", "r")
-    index_string = index_file.readlines()
-    temp_string = Template(''.join(index_string))
-    index_string = temp_string.substitute(name="Chiranjaya")
-    return f"{index_string}"
+@app.route("/insert_user")
+def insert_user_data():
+    name = ""
+    if "user_name" in request.args:
+        print(request.args["user_name"])
+    return render_template("insert_user_data.html", name=name)
 
 
-
+# @app.route("/file")
+# def hello_world():
+#     index_file = open("templates/index.html", "r")
+#     index_string = index_file.readlines()
+#     temp_string = Template(''.join(index_string))
+#     index_string = temp_string.substitute(name="Chiranjaya")
+#     return f"{index_string}"
+#
 
 if __name__ == '__main__':
     app.run(port=3232)
