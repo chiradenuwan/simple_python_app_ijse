@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from nic_parser.parser import Parser
 
 app = Flask(__name__)
 
@@ -25,13 +26,41 @@ app = Flask(__name__)
 # def index():
 #     return render_template("index.html", name="AAA")
 #
+class User:
+    name: None
+    nic: 0
+    dob: None
+    gender: None
 
-@app.route("/insert_user")
+    def __init__(self, name, nic):
+        self.nic = nic
+        self.name = name
+        self.dob = Parser(f"{nic}").birth_date
+        self.gender = Parser(f"{nic}").gender
+
+
+name_list = []
+
+
+@app.route("/insert_user", methods=["get", "post"])
 def insert_user_data():
+    print("insert_user_data_method")
     name = ""
-    if "user_name" in request.args:
-        print(request.args["user_name"])
-    return render_template("insert_user_data.html", name=name)
+    print(request.method)
+    if request.method == "POST":
+        print("inside post filter")
+        print(request.args)
+        print(request.form)
+        name = request.form.get("user_name")
+        nic = request.form.get("nic")
+        # dob = request.form.get("do")
+        # gender = request.form.get("nic")
+        user = User(name=name, nic=nic)
+        print(f"User : {user}")
+        name_list.append(user)
+        print(name)
+        print(name_list)
+    return render_template("insert_user_data.html", name_list=name_list);
 
 
 # @app.route("/file")

@@ -1,9 +1,29 @@
-<form >
+<form method="post">
     Username : <input type="text" name="user_name">
+    Nic : <input type="text" name="nic">
     <button type="submit">Save</button>
     You Inset Name as {{ name }}
-
 </form>
 <table>
+    <th>
+        <tr style="color: green; ">
+            <td>Name</td>
+            <td>Nic</td>
+            <td>DOB</td>
+            <td>Gender</td>
+        </tr>
+    </th>
+
+    {%for user in name_list%}
+
+    <tr>
+        <td>{{user.name}}</td>
+        <td>{{user.nic}}</td>
+        <td>{{user.dob}}</td>
+        <td>{{user.gender}}</td>
+
+        {%endfor%}
+
+    </tr>
 
 </table>
