@@ -36,7 +36,7 @@ class User:
         self.nic = nic
         self.name = name
         self.dob = Parser(f"{nic}").birth_date
-        self.gender = Parser(f"{nic}").gender
+        self.gender = Parser(f"{nic}").gender.name.capitalize()
 
 
 name_list = []
@@ -53,8 +53,6 @@ def insert_user_data():
         print(request.form)
         name = request.form.get("user_name")
         nic = request.form.get("nic")
-        # dob = request.form.get("do")
-        # gender = request.form.get("nic")
         user = User(name=name, nic=nic)
         print(f"User : {user}")
         name_list.append(user)
